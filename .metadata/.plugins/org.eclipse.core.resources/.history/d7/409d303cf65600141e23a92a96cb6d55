@@ -1,0 +1,15 @@
+import java.util.LinkedList;
+
+
+public class Usuario {
+	private String nome;
+	private String senha;
+	private String login;
+	
+	public Usuario(String nome, String senha, String login){
+		this.nome = nome;
+		this.senha = senha;
+		this.login = login;
+	}
+
+}

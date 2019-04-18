@@ -1,0 +1,76 @@
+package finder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Finder {
+	
+	private Repository repository;
+
+	public Finder(Repository repository) {
+		this.repository = repository;
+	}
+	
+	public List<Resource> selectBy(Specification spec) {
+		List<Resource> foundResources = new ArrayList<Resource>();
+
+		for (Resource resource : this.repository.getResources()) {
+			if (spec.isSatisfied(resource)) {
+				foundResources.add(resource);
+			}
+		}
+		return foundResources;
+	}
+
+	
+	/*
+	public List<Resource> byType(Type typeOfResourceToFind) {
+		List<Resource> foundResources = new ArrayList<Resource>();
+		
+		for (Resource resource : this.repository.getResources()) {
+			if (resource.getType().equals(typeOfResourceToFind)) {
+				foundResources.add(resource);
+			}
+		}
+		return foundResources;
+	}
+
+	public List<Resource> bySize(Size sizeOfResourceToFind) {
+		List<Resource> foundResources = new ArrayList<Resource>();
+		
+		for (Resource resource : this.repository.getResources()) {
+			if (resource.getSize().equals(sizeOfResourceToFind)) {
+				foundResources.add(resource);
+			}
+		}
+		return foundResources;
+	}
+	
+	public List<Resource> byCost(double costOfResourceToFind) {
+		List<Resource> foundResources = new ArrayList<Resource>();
+		
+		for (Resource resource : this.repository.getResources()) {
+			if (resource.getCost() <= costOfResourceToFind) {
+				foundResources.add(resource);
+			}
+		}
+		return foundResources;
+	}
+
+	public List<Resource> byTypeSizeCost(Type type, Size size, int cost) {
+		List<Resource> foundProducts = new ArrayList<Resource>();
+		
+		for (Resource resource : this.repository.getResources()) {
+			
+			if (resource.getType() == type && 
+				resource.getSize() == size &&
+				resource.getCost() < cost) {
+				foundProducts.add(resource);
+			}
+		}
+		return foundProducts;
+	}
+	*/
+	
+
+}

@@ -1,0 +1,10 @@
+package finder;
+
+public class Produto {
+
+	public Produto(String s1, String s2){
+		
+		
+	}
+
+}

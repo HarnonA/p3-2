@@ -1,0 +1,27 @@
+package plan;
+
+public class Actionable extends Acao {
+
+	public Actionable() {
+	}
+	
+	public void defer() {
+		System.out.println("Actionable Defer");
+	}
+	
+	public void next() {
+		System.out.println("Actionable Next");
+	}
+	
+	public void schedule() {
+		System.out.println("Actionable Schedule");
+	}
+	
+	public void delegate() {
+		System.out.println("Actionable Delegate");
+	}
+	
+	public void doit() {
+		System.out.println("Actionable Do");
+	}
+}

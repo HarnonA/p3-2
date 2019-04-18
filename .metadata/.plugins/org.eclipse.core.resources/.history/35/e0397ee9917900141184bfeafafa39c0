@@ -1,0 +1,24 @@
+package plan;
+
+public class Fabrica {
+	public Fabrica(Action action){
+		if (action == Action.DEFER)
+			return new Actionable;
+
+		if (action == Action.NEXT)
+			return new Actionable;
+		if (action == Action.SCHEDULED)
+			return new Actionable;
+		if (action == Action.DELEGATE)
+			return new Actionable;
+		if (action == Action.DO)
+			return new Actionable;
+		if (action == Action.INCUBATE)
+			return new Actionable;
+		if (action == Action.TRASH)
+			return new Actionable;
+		
+	}
+	
+
+}

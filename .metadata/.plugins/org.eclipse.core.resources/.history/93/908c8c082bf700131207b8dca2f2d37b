@@ -1,0 +1,103 @@
+import java.awt.Component;
+import java.awt.Frame;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+
+
+public class CartridgeOne {
+	public Cartridge(String romFileName, Component component) {
+		applet = component; /* 5823 */
+		this.romFileName = romFileName;
+		InputStream inputStrm = null;
+		try {
+			/*
+			 * if (JavaBoy.runningAsApplet) { Applet myApplet = (Applet) a; is =
+			 * new URL(myApplet.getDocumentBase(), romFileName).openStream(); }
+			 * else { is = new FileInputStream(new File(romFileName)); }
+			 */
+			inputStrm = openRom(romFileName, component);
+			byte[] firstBank = new byte[0x04000];
+
+			int total = 0x04000;
+			do {
+				total -= inputStrm.read(firstBank, 0x04000 - total, total); // Read the
+																		// first
+																		// bank
+																		// (bank
+																		// 0)
+			} while (total > 0);
+
+			cartType = firstBank[0x0147];
+
+			numBanks = lookUpCartSize(firstBank[0x0148]); // Determine the
+															// number of 16kb
+															// rom banks
+
+			// is.close();
+			// is = new FileInputStream(new File(romFileName));
+			rom = new byte[0x04000 * numBanks]; // Recreate the ROM array with
+												// the correct size
+
+			// Copy first bank into main rom array
+			for (int r = 0; r < 0x4000; r++) {
+				rom[r] = firstBank[r];
+			}
+
+			total = 0x04000 * (numBanks - 1); // Calculate total ROM size (first
+												// one already loaded)
+			do { // Read ROM into memory
+				total -= inputStrm.read(rom, rom.length - total, total); // Read the
+																	// entire
+																	// ROM
+			} while (total > 0);
+			inputStrm.close();
+
+			JavaBoy.debugLog("Loaded ROM '" + romFileName + "'.  " + numBanks
+					+ " banks, " + (numBanks * 16) + "Kb.  " + getNumRAMBanks()
+					+ " RAM banks.");
+			JavaBoy.debugLog("Type: " + cartTypeTable[cartType] + " ("
+					+ JavaBoy.hexByte(cartType) + ")");
+
+			if (!verifyChecksum() && (component instanceof Frame)) {
+				new ModalDialog((Frame) component, "Warning",
+						"This cartridge has an invalid checksum.",
+						"It may not execute correctly.");
+			}
+
+			if (!JavaBoy.runningAsApplet) {
+				loadBatteryRam();
+			}
+
+			// Set up the real time clock
+			Calendar rightNow = Calendar.getInstance();
+
+			int days = rightNow.get(Calendar.DAY_OF_YEAR);
+			int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+			int minute = rightNow.get(Calendar.MINUTE);
+			int second = rightNow.get(Calendar.SECOND);
+
+			RTCReg[SECONDS] = second;
+			RTCReg[MINUTES] = minute;
+			RTCReg[HOURS] = hour;
+			RTCReg[DAYS_LO] = days & 0x00FF;
+			RTCReg[DAYS_HI] = (days & 0x01FF) >> 8;
+
+			realTimeStart = System.currentTimeMillis();
+			lastSecondIncrement = realTimeStart;
+
+			cartridgeReady = true;
+
+		} catch (IOException e) {
+			System.out
+					.println("Error opening ROM image '" + romFileName + "'!");
+		} catch (IndexOutOfBoundsException e) {
+			new ModalDialog((Frame) component, "Error",
+					"Loading the ROM image failed.",
+					"The file is not a valid Gameboy ROM.");
+		}
+
+	}
+
+
+}

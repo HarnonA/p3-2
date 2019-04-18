@@ -1,0 +1,14 @@
+package finder;
+
+public class Produto implements Tipo {
+
+	@Override
+	public boolean isSatisfaid(Produto product) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	
+
+}

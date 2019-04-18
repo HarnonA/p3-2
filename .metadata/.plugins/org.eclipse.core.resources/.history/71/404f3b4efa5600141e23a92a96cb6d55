@@ -1,0 +1,51 @@
+import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+
+
+
+public class IFace {
+	
+	
+	public static void main(String[] args) {
+		LinkedList<Usuario> todosUsuarios = new LinkedList<Usuario>();
+		private Scanner s = new Scanner(System.in);
+		int opcao = 0;
+		
+		System.out.println("Escolha opcao:");
+		opcao = lerInt();
+		
+		System.out.println("");
+		
+		
+		Operacoes op = new Operacoes();
+		System.out.println("Criar usuario");
+		op.cadastrar();
+		
+		
+	}
+	
+	/*
+	 * ==================
+	 */
+	
+	private int lerInt() {
+		int num = 0;
+		try {
+			num = s.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println("Digite um valor valido!");
+			s.nextLine();
+			num = 0;
+		}
+		return num;
+	}
+	
+	
+	
+	
+	
+	
+
+}

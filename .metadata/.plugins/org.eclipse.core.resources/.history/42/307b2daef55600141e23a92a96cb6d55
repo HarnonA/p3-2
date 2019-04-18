@@ -1,0 +1,10 @@
+import java.util.LinkedList;
+
+
+public class Usuario {
+	private String name;
+	private String senha;
+	private String login;
+	LinkedList Usuario amigos;
+
+}

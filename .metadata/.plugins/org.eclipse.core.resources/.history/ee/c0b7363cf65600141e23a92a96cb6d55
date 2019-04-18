@@ -1,0 +1,25 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+public class IFace {
+	private Scanner s = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	private int lerInt(){
+		int num = 0;
+		try {
+			num = s.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println("Digite um valor valido!");
+			s.nextLine();
+			num = -1;
+		}
+		return num;
+		
+	}
+
+}

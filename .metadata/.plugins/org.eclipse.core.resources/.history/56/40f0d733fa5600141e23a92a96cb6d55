@@ -1,0 +1,24 @@
+import java.util.LinkedList;
+
+
+
+
+public class IFace {
+	
+	
+	public static void main(String[] args) {
+		LinkedList<Usuario> todosUsuarios = new LinkedList<Usuario>();
+		Operacoes op = new Operacoes();
+		System.out.println("Criar usuario");
+		op.cadastrar();
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+
+}

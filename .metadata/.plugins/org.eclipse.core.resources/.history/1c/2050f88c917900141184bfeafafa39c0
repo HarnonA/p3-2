@@ -1,0 +1,9 @@
+package plan;
+
+public class Fabrica {
+	public Fabrica(Action action){
+		
+	}
+	
+
+}

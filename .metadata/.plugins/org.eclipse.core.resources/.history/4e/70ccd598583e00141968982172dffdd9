@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+
+public class Refazer {
+	ArrayList estado;
+	ArrayList estadoAnterior;
+	
+	public Refazer(){
+		estado = new ArrayList();
+		
+	}
+	
+	public void addEstado(ArrayList estadoNovo){
+		ArrayList novo = new ArrayList();
+		
+		int index;
+		for( index = 0 ; index < estado.size() ; index++ ){
+			novo.add(estado.get(index));
+		}
+		estadoAnterior.add(novo);
+		
+		for( index = 0 ; index < estadoNovo.size() ; index++ ){
+			novo.add(estadoNovo.get(index));
+		}
+	
+		estado.add(novo);
+		
+	}
+	
+	public LinkedList getEstado(){
+		return estadoAnterior;
+	}
+	
+	
+	
+	public String toString(){
+		String result = estado.toString();
+		return result;
+	}
+	
+
+}

@@ -1,0 +1,16 @@
+package plan;
+
+public class Defer {
+	Actionable act;
+	
+	public Defer(){
+		act = new Actionable();
+	}
+	public void execute(Plan plan){
+		act.defer();
+		plan.store();
+		plan.buildPlan();
+		
+	}
+
+}

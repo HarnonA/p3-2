@@ -1,0 +1,17 @@
+package finder;
+
+public class Teste {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Repository rep = new Repository();
+		Resource resource = new Resource("F", "S", Type.file, 10.0 , Size.LARGE);
+		Finder finder = new Finder(rep);
+		finder.byCost(10.0);
+
+	}
+
+}

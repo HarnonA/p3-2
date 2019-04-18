@@ -1,0 +1,15 @@
+package plan;
+
+public class Defer implements Acao{
+	Actionable act;
+	
+	public Defer(Actionable act){
+		this.act = act;
+	}
+	public void execute(Plan plan){
+		super.executa();
+		act.defer();
+		
+	}
+
+}

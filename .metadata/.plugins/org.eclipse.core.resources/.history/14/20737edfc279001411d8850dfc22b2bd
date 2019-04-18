@@ -1,0 +1,12 @@
+package finder;
+
+public class ByTypeSizeCost {
+	private double cost;
+	private Size size;
+	private Type type;
+	
+	public ByTypeSizeCost(){
+		
+	}
+
+}

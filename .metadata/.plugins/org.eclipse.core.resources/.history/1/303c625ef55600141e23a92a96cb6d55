@@ -1,0 +1,7 @@
+
+public class Usuario {
+	private String name;
+	private String senha;
+	private String login;
+
+}

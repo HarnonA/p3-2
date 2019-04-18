@@ -1,0 +1,17 @@
+package elements;
+
+public class Teste {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		DoPlan plan = new DoPlan();
+		Engine engine = new Engine();
+		System.out.println(engine.accept(plan));
+
+	}
+
+}

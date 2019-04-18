@@ -1,0 +1,106 @@
+import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+
+public class Operacoes {
+	private Scanner s = new Scanner(System.in);
+	
+	private int lerInt() {
+		int num = 0;
+		try {
+			num = s.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println("Digite um valor valido!");
+			s.nextLine();
+			num = 0;
+		}
+		return num;
+	}
+	
+	/*
+	 * =============================================
+	 */
+	
+	public Usuario cadastrar(){
+		String login, senha, senhaTeste, nome;
+		System.out.print("Digite seu email:");
+		login = s.nextLine();
+		System.out.print("Digite nome do usuario:");
+		nome = s.nextLine();
+		do{
+			System.out.print("Digite sua senha:");
+			senha = s.nextLine();
+			System.out.print("Confirme sua senha:");
+			senhaTeste = s.nextLine();
+			if(!senha.equals(senhaTeste))
+				System.out.println("\n* Senhas diferentes *");
+			}while(!senha.equals(senhaTeste));
+		
+		Usuario usuario = new Usuario(nome, senha, login);
+		return usuario;	
+	}
+	
+	/*
+	 * =============================================
+	 */
+	public void editarPerfil(Usuario usuario){
+		int escolha = 0;
+		escolha = lerInt();
+		
+		System.out.println("Escolha campo para alteracao");
+		System.out.println("1 - Nome");
+		System.out.println("2 - Senha");
+		System.out.println("3 - Login");
+		if(escolha == 1){
+			String nome;
+			System.out.println("Digite novo nome");
+			nome = s.nextLine();
+			usuario.setNome(nome);
+			System.out.print("Nome alterado");
+		}
+		else if(escolha == 2){
+			String senha, senhaTeste;
+			do{
+			System.out.print("Digite nova senha:");
+			senha = s.nextLine();
+			System.out.print("Confirme nova senha:");
+			senhaTeste = s.nextLine();
+			if(!senha.equals(senhaTeste))
+				System.out.print("Senhas diferentes");
+			}while(!senha.equals(senhaTeste));
+			usuario.setSenha(senha);
+			System.out.print("Senhas alterada");
+			
+		}
+		else if(escolha == 3){
+			String login;
+			System.out.print("Digite novo login:");
+			login = s.nextLine();
+			usuario.setLogin(login);
+			System.out.print("Login alterado");
+			
+			
+		}
+		
+	}
+	/*
+	 * =============================================
+	 */
+	public boolean procurar(String login, LinkedList<Usuario> usuarios){
+		for (int index = 0; index < usuarios.size(); index++) {
+			if(usuarios.get(index).getLogin().equals(login)){
+				String senha;
+				System.out.print("Senha: ");
+				senha = s.nextLine();
+				if(usuarios.get(index).getSenha().equals(senha))
+					return true;
+				
+			}
+		}
+		System.out.println("\n* Login nao cadastrado *");
+		return false;
+	}
+	
+
+}

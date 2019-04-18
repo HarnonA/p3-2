@@ -1,0 +1,265 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		ArrayList<Empregado> listaEmpregados = new ArrayList<Empregado>();
+		ArrayList<Empregado> listaAnterior = new ArrayList<Empregado>();
+		
+//		LinkedList estado = new LinkedList();
+		Refazer estado = new Refazer();
+		
+		
+		
+			
+		Empregado assalariado;
+		Emp_Horista horista; 
+		Emp_Comissionado comissionado;
+		FolhaPagamento folha = new FolhaPagamento();
+		
+		
+		Calendar calendario = Calendar.getInstance();
+		
+		
+		
+		//==================================
+		//Carrega Banco de Dados
+		
+		assalariado = new Emp_Assalariado(01,"Artur", "Rua A", 3000, true, 1);
+		listaEmpregados.add(assalariado);
+		//estado.addEstado(listaEmpregados);
+		
+		int i; 
+		//for(i=0;i<listaEmpregados.size()-1;i++)
+			//listaAnterior.addAll(listaEmpregados);
+		//System.out.println(listaAnterior.toString());
+		
+		
+		//System.out.println(assalariado.getValorSindicato());
+		assalariado = new Emp_Assalariado(02,"Bruno", "Rua B", 3000, false, 2);
+		listaAnterior = listaEmpregados;
+		listaEmpregados.add(assalariado);
+		System.out.println(listaAnterior.toString());
+		//estado.addEstado(listaEmpregados);
+		
+		for(i=0;i<listaEmpregados.size()-1;i++)
+			listaAnterior.addAll(listaEmpregados);
+		System.out.println(listaAnterior.toString());
+		
+		
+		//System.out.println(estado.toString());
+		
+		assalariado = new Emp_Assalariado(03,"Caio", "Rua C", 3000, false, 0);
+		listaEmpregados.add(assalariado);
+		
+		
+		
+		horista = new Emp_Horista(04,"Danilo", "Rua D", 0, true, 1);
+		listaEmpregados.add(horista);
+		horista.exHora();	//adiciona horas trabalhas como exemplo
+		horista = new Emp_Horista(05,"Eurico", "Rua E", 0, false, 2);
+		listaEmpregados.add(horista);
+		horista.exHora();	//adiciona horas trabalhas como exemplo
+		
+		
+		comissionado = new Emp_Comissionado(06,"Fabio", "Rua F", 1000, 0.05, true, 0);
+		comissionado.setVenda("10/8/2014", 1100);
+		listaEmpregados.add(comissionado);
+		
+		comissionado = new Emp_Comissionado(07, "Gabriel", "Rua G", 1000, 0.08, false, 1);
+		comissionado.setVenda("10/8/2014", 1100);
+		listaEmpregados.add(comissionado);
+		
+		
+		
+		
+		
+	
+		
+		
+		//==================================
+		
+		int opcao;
+		int contId = 8;	//7 empregados ja cadastrados
+		for(;;){
+			
+			estado.addEstado(listaEmpregados);
+			//System.out.println(estado.toString());
+			
+				System.out.println("Escolha opção");
+				System.out.println("1 - Adicionar empregado");
+				System.out.println("2 - Remover empregado");
+				System.out.println("3 - Lançar cartao de ponto");
+				System.out.println("4 - Lançar venda");
+				System.out.println("5 - Lançar taxa de serviço");
+				System.out.println("6 - Alterar empregado");
+				System.out.println("7 - Pagar funcionarios");
+				System.out.println("8 - ");
+				System.out.println("9 - Listar empregados");
+			
+			
+			
+			Scanner scanner = new Scanner( System.in );
+			opcao = scanner.nextInt();
+			
+			
+			//adiciona um empregado a lista de empregado com o id de contId
+			if( opcao == 1){
+				//listaEmpregados.add(folha.addEmpregado( listaEmpregados.size()+1 ));
+				listaEmpregados.add(folha.addEmpregado( contId ));
+				contId++;
+				
+			}
+			
+			//=================
+			
+			//remove um empregado da lista
+			else if( opcao == 2 ){
+				folha.removeEmpregado(listaEmpregados);
+			}
+			
+			//=================
+			
+			//procura o id de um empregado Horista
+			//compara o id solicitado com o id do empregado
+			//se iguais, atribui hora trabalhada a um dia na semana dado pelo sistema
+			else if(opcao == 3){
+				int idEmpProcurado;
+				int index;
+				int horas = 0;
+				boolean localizado = false;
+				System.out.println("Escolha id de empregado Horista");
+				idEmpProcurado = scanner.nextInt();
+				
+				for(index = 0 ; index < listaEmpregados.size() ;index++){
+					if( listaEmpregados.get(index) instanceof Emp_Horista){				
+						Emp_Horista empH = (Emp_Horista)listaEmpregados.get(index);
+						
+						if( idEmpProcurado == empH.getId() ){
+							localizado = true;
+							System.out.println("Horas trabalhadas no dia");
+							horas = scanner.nextInt();
+							empH.setHorasTrabalhadas(horas, calendario.get(Calendar.DAY_OF_WEEK)-1);
+						}
+					}					
+				}
+				if( localizado == false)
+					System.out.println("\nId solicitado não é de horista");
+					
+			}
+			
+			//=================
+			
+			//procura pelo id de um empregado comissionado
+			//fornece uma string de data e um valor de venda
+			else if( opcao == 4 ){
+				int idEmpProcurado;
+				int index;
+				double valorVenda = 0;
+				String data;
+				System.out.println("Escolha id de empregado comissionado");
+				idEmpProcurado = scanner.nextInt();
+				
+				for(index = 0 ; index < listaEmpregados.size() ;index++){
+					if( listaEmpregados.get(index) instanceof Emp_Comissionado){				
+						Emp_Comissionado empComissionado = (Emp_Comissionado)listaEmpregados.get(index);
+												
+						if( idEmpProcurado == empComissionado.getId() ){
+							System.out.println("Valor venda");
+							valorVenda = scanner.nextInt();
+							data = Integer.toString( calendario.get(Calendar.DAY_OF_MONTH) );
+							data += "/" + Integer.toString( calendario.get(Calendar.MONTH) );
+							data += "/" + Integer.toString( calendario.get(Calendar.YEAR) );
+							System.out.println(data);
+							empComissionado.setVenda(data, valorVenda);
+						}
+					}					
+				}					
+			}
+			
+			//=================
+			
+			//adiciona um serviço aos custos de um empregado
+			else if( opcao == 5 ){
+				int idProcurado;
+				int index;
+				double taxa;
+				Empregado empregado;
+				System.out.println("Id procurado");
+				idProcurado = scanner.nextInt();
+				
+				for( index = 0 ; index < listaEmpregados.size() ; index++ ){
+					empregado = (Empregado)listaEmpregados.get(index);
+					if( empregado.getId() == idProcurado ){
+						System.out.println("Taxa de serviço");
+						taxa = scanner.nextDouble();
+						empregado.addServico(taxa);
+					}
+				}
+			}
+			
+			//=================
+			
+			//alterar dados de um empregado
+			else if( opcao == 6 )
+				folha.alterarEmpregado( listaEmpregados );
+			
+			//=================
+						
+			//realiza pagamento dos funcionarios
+			else if ( opcao == 7 )
+				folha.paga(listaEmpregados );
+			
+			//=================
+			
+			else if(opcao == 8){
+				//listaEmpregados = estado.getEstado();
+				System.out.println(listaEmpregados.toString());
+				
+				
+						
+			
+				
+				
+				
+				
+			}
+			
+			//=================
+			
+			//listar empregados
+			if( opcao == 9 ){
+				int index;
+				for(index = 0 ; index < listaEmpregados.size() ;index++){
+					//if( folhaPagamento.get(index) instanceof Emp_Assalariado)	
+					System.out.println(listaEmpregados.get(index).toString());
+				}
+			}
+			
+			//desfaz.add(listaEmpregados);
+			
+			
+			
+			
+				
+			
+			/*
+				if( folhaPagamento.get(index) instanceof Emp_Assalariado)	
+					System.out.println(folhaPagamento.get(index).toString());
+			}
+			*/
+			
+			
+			
+			
+				
+			
+			
+		}
+			
+	}
+
+}

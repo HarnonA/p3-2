@@ -1,0 +1,9 @@
+package plan;
+
+public enum Num {
+	C_Defer, C_Trash;
+
+	public enum C_Defer {
+
+	}
+}

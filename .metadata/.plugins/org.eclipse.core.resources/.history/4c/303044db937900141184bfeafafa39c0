@@ -1,0 +1,8 @@
+package plan;
+
+public interface Acao {
+	public void store();
+	public void buildPlan();
+	
+
+}

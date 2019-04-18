@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;prova/src/machine/SoulOut.java&apos; to &apos;SouldOut.java&apos;" description="Rename resource &apos;SoulOut.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/machine/SoulOut.java" name="SouldOut.java" stamp="1404739355620" updateReferences="true"/>
+</session>

@@ -1,0 +1,146 @@
+package plan;
+
+import java.util.List;
+
+
+import elements.Body;
+import elements.BuildPlan;
+import elements.Engine;
+import elements.Invocation;
+import elements.Item;
+
+public class Plan {
+
+	private Actionable actionable = null;
+	private NoActionable noActionable = null;
+	private List<Action> actions = null;
+	protected static double time = 0.005;
+
+	public Plan(List<Action> actions) {
+		this.actions = actions;
+		actionable = new Actionable();
+		noActionable = new NoActionable();
+	}
+	
+	public void execute(){
+		
+		for (Action action : this.actions) {
+			Acao acao;
+			
+		}
+		
+		
+		
+	}
+	
+	/*
+	protected static void buildPlan() {
+		BuildPlan buildPlan = new BuildPlan();
+		
+		buildPlan.accept(new BuildPlanDoVisitor());
+		buildPlan.accept(new BuildPlanPrintVisitor());
+	}
+	*/
+	
+	/*
+	public void execute() {
+		System.out.println("Executing Actions: " + this.actions);
+		for (Action action : this.actions) {
+			if (action.equals(Action.DEFER)) {
+				actionable.defer();
+				store();
+				buildPlan();
+			}
+			if (action.equals(Action.NEXT)) {
+				actionable.next();
+				defineTime(time);
+				buildPlan();
+			}
+			if (action.equals(Action.SCHEDULED)) {
+				actionable.schedule();
+				schedule();
+				store();
+				buildPlan();
+			}
+			if (action.equals(Action.DELEGATE)) {
+				actionable.delegate();
+				select();
+				store();
+				buildPlan();
+			}
+			if (action.equals(Action.DO))
+				actionable.doit();
+			done();
+			buildPlan();
+			if (action.equals(Action.INCUBATE))
+				noActionable.incubate();
+			store();
+			register();
+			buildPlan();
+			if (action.equals(Action.TRASH))
+				noActionable.trash();
+			remove();
+			buildPlan();
+		}
+	}
+	*/
+	protected static void buildPlan() {
+		BuildPlan buildPlan = new BuildPlan();
+
+		for (Item element : buildPlan.getElements()) {
+			if (element instanceof Invocation) {
+				Invocation invocation = (Invocation) element;
+				invocation.print("Constructing Invocation");
+			}
+			if (element instanceof Body) {
+				Body body = (Body) element;
+				body.print("Constructing Body");
+			}
+			if (element instanceof Engine) {
+				Engine engine = (Engine) element;
+				engine.print("Constructing Engine");
+			}
+		}
+		for (Item element : buildPlan.getElements()) {
+			if (element instanceof Invocation) {
+				Invocation invocation = (Invocation) element;
+				invocation.print("Printing invocation");
+			}
+			if (element instanceof Body) {
+				Body body = (Body) element;
+				body.print("Printing Body");
+			}
+			if (element instanceof Engine) {
+				Engine engine = (Engine) element;
+				engine.print("Printing Engine");
+			}
+		}
+
+	}
+	
+
+	protected static void remove() {
+	}
+
+	protected static void register() {
+	}
+
+	protected static void done() {
+	}
+
+	protected static void select() {
+	}
+
+	protected static void schedule() {
+	}
+
+	protected static void defineTime(double time2) {
+	}
+
+	protected void notifyUser() {
+	}
+
+	protected static void store() {
+	}
+
+}

@@ -1,0 +1,9 @@
+package plan;
+
+public class Acao {
+	public void executa() {
+
+	}
+	
+
+}

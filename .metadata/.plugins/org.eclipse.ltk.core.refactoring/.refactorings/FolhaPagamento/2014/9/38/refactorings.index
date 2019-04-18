@@ -1,0 +1,7 @@
+1410951225381	Infer generic type arguments
+1410961363048	Rename resource 'AnimalPrototype.java'
+1411263600498	Convert local variable 'scanner' to field
+1411264914672	Rename local variable 'bool'
+1411324797777	Rename local variable 'a'
+1411324809293	Rename local variable 'x'
+1411340125801	Convert local variable 's' to field

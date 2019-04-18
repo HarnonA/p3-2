@@ -1,0 +1,8 @@
+package elements;
+
+public interface Item {
+	
+	//void print(String activity);
+	void accept(BuildPlanVisitor visitor);
+
+}

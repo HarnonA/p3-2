@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;prova/src/Prova 2 2014.1&apos; to &apos;Prova 2&apos;" description="Rename resource &apos;Prova 2 2014.1&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/Prova 2 2014.1" name="Prova 2" stamp="1417438323822" updateReferences="true"/>
+</session>

@@ -1,0 +1,19 @@
+package finder;
+
+public class ByCost {
+	private double cost;
+
+	public CostSpec(double cost) {
+		this.cost = cost;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+	
+	@Override
+	public boolean isSatisfied(Resource resource) {
+		return resource.getCost() <= getCost();
+	}
+
+}

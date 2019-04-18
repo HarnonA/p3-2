@@ -1,0 +1,61 @@
+import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+
+
+
+public class IFace {
+	
+	
+	
+	public static void main(String[] args) {
+		LinkedList<Usuario> todosUsuarios = new LinkedList<Usuario>();
+		Scanner s = new Scanner(System.in);
+		
+		int opcao = 0;
+		
+		
+		do {
+			System.out.println("Escolha opcao:");
+			System.out.print("1 - Criar conta");
+			System.out.println("\t\t2 - Editar Perfil");
+			System.out.print("3 - Adicionar amigos");
+			System.out.println("\t\t4 - Chat");
+			System.out.print("5 - Criar comunidade");
+			System.out.println("\t\t6 - Adicioar membros");
+			System.out.print("7 - Recuperar");
+			System.out.println("\t\t8 - Remover conta");
+			
+			try {
+				opcao = s.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("Digite um valor valido!");
+				s.nextLine();
+				opcao = 0;
+			}
+		} while (opcao < 0 || opcao > 8);
+		
+		
+		
+		
+		Operacoes op = new Operacoes();
+		System.out.println("Criar usuario");
+		todosUsuarios.addFirst(op.cadastrar());
+		
+		
+	}
+	
+	/*
+	 * ==================
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

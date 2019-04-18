@@ -1,0 +1,16 @@
+package plan;
+
+public class Test {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Action a = 1;
+		
+		Plan plan = new Plan();
+
+	}
+
+}

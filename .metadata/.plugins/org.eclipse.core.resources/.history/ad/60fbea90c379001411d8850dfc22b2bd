@@ -1,0 +1,28 @@
+package finder;
+
+public class Teste {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Repository rep = new Repository();
+		Resource resource = new Resource("F", "S", Type.database, 10.0 , Size.LARGE);
+		rep.add(resource);
+		resource = new Resource("x", "y", Type.file, 12.0 , Size.MEDIUM);
+		rep.add(resource);
+		ByCost cost = new ByCost(11);
+		BySize size = new BySize(Size.LARGE);
+		ByType type = new ByType(Type.database);
+		ByTypeSizeCost tsc = new ByTypeSizeCost(type, size, cost);
+		//cost = new ByCost(14);
+		
+		Finder finder = new Finder(rep);
+		System.out.println(finder.selectBy(tsc));
+		//System.out.println(finder.selectBy(type));
+		//System.out.println(finder.selectBy(size));
+		//System.out.println(finder.byCost(10.0));
+		
+		
+
+	}
+
+}

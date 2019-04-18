@@ -1,0 +1,17 @@
+package plan;
+
+public class Acao {
+	public void store() {
+
+	}
+
+	public void buildPlan() {
+
+	}
+
+	public void executa() {
+
+	}
+	
+
+}

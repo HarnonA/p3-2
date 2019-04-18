@@ -1,0 +1,18 @@
+package plan;
+
+import java.util.List;
+
+public class Teste {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		List<Action> list = new java.awt.List();
+		list.add(Action.DEFER);
+		Plan plan = new Plan(list);
+
+	}
+
+}

@@ -1,0 +1,21 @@
+package plan;
+
+public interface Acao {
+	public void remove();
+
+	public void register();
+
+	public void done();
+
+	public void select();
+
+	public void schedule();
+
+	public void defineTime(double time2);
+
+	private void notifyUser();
+
+	private void store();
+	
+
+}

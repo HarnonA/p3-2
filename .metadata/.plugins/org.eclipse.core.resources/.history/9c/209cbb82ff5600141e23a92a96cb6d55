@@ -1,0 +1,107 @@
+import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+
+
+
+public class IFace {
+	
+	
+	
+	public static void main(String[] args) {
+		LinkedList<Usuario> todosUsuarios = new LinkedList<Usuario>();
+		Scanner s = new Scanner(System.in);
+		Operacoes op = new Operacoes();
+		int opcao = 0;
+		boolean cadastrado = false;
+		
+		Usuario user = new Usuario("Artur", "123", "artur@gmail.com");
+		todosUsuarios.addFirst(user);
+		user = new Usuario("Bruno", "123", "bruno@gmail.com");
+		todosUsuarios.addFirst(user);
+		user = new Usuario("Caio", "123", "caio@gmail.com");
+		todosUsuarios.addFirst(user);
+		user = new Usuario("Davi", "123", "davi@gmail.com");
+		todosUsuarios.addFirst(user);
+		
+		
+		do {
+			System.out.println("1 - Entrar login");
+			System.out.println("2 - Nao possuo conta");
+			
+			try {
+				opcao = s.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("\nDigite um valor valido!");
+				s.nextLine();
+				opcao = 0;
+			}
+		} while (opcao < 1 || opcao > 2);
+		s.nextLine();
+		
+		if(opcao == 1){
+			do{
+			System.out.print("Insira login   <0-Sair>");
+			String log;
+			log = s.nextLine();
+			if(log.equals("0")){
+				System.out.println("Tchau ");
+				break;
+			}
+			cadastrado = op.procurar(log, todosUsuarios);
+			}while(!cadastrado);
+		}
+
+		else if (opcao == 2) {
+			System.out.println("Criar usuario");
+			todosUsuarios.addFirst(op.cadastrar());
+
+		}
+			
+		if(cadastrado == true){
+			do {
+				System.out.println("Escolha opcao:");
+				System.out.println("1 - Editar Perfil");
+				System.out.print("2 - Adicionar amigos");
+				System.out.println("3 - Chat");
+				System.out.print("4 - Criar comunidade");
+				System.out.println("5 - Adicioar membros");
+				System.out.print("6 - Recuperar");
+				System.out.println("7 - Remover conta");
+
+				try {
+					opcao = s.nextInt();
+				} catch (InputMismatchException e) {
+					System.out.println("Digite um valor valido!");
+					s.nextLine();
+					opcao = 0;
+				}
+			} while (opcao < 0 || opcao > 8);
+
+			/*
+			 * if(opcao == 1){ Operacoes op = new Operacoes();
+			 * System.out.println("Criar usuario");
+			 * todosUsuarios.addFirst(op.cadastrar()); }
+			 */
+
+			if (opcao == 2) {
+
+			}
+		}
+		
+	}
+	
+	/*
+	 * ==================
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

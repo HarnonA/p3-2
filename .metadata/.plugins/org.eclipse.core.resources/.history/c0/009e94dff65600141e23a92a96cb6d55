@@ -1,0 +1,18 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+public class IFace {
+	
+	public static void main(String[] args) {
+		System.out.println("Criar usuario");
+		
+	}
+	
+	
+	
+	
+	
+	
+
+}

@@ -1,0 +1,18 @@
+package plan;
+
+public class C_Do implements Acao{
+	Actionable act;
+	
+	public C_Do(Actionable act){
+		this.act = act;
+	}
+	
+	public void executa(){
+		act.doit();
+		Plan.done();
+		PlanbuildPlan();
+		
+		
+	}
+
+}

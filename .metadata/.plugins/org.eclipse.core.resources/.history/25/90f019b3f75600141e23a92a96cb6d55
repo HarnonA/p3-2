@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+
+public class Operacoes {
+	private Scanner s = new Scanner(System.in);
+	
+	public void cadastrar(Usuario usuario){
+		String login, senha, senhaTeste, nome;
+		System.out.print("Digite seu email:");
+		login = s.nextLine();
+		System.out.print("Digite nome do usuario:");
+		nome = s.nextLine();
+		System.out.print("Digite sua senha:");
+		senha = s.nextLine();
+		System.out.print("Confirme sua senha:");
+		senhaTeste = s.nextLine();
+		if(!senha.equals(senhaTeste))
+			System.out.print("Senhas diferentes");
+		
+			
+		
+		
+	}
+
+}

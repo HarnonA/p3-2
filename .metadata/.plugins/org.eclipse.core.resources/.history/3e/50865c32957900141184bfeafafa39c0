@@ -1,0 +1,6 @@
+package finder;
+
+public interface Spec {
+	public boolean pertence(Repository repository);
+
+}

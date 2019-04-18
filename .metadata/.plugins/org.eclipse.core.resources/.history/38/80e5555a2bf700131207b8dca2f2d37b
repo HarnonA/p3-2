@@ -1,0 +1,155 @@
+import java.awt.Component;
+import java.awt.Frame;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+
+
+public class CartridgeOne {
+
+	final int[][] romSizeTable = { { 0, 2 }, { 1, 4 }, { 2, 8 }, { 3, 16 },
+			{ 4, 32 }, { 5, 64 }, { 6, 128 }, { 7, 256 }, { 0x52, 72 },
+			{ 0x53, 80 }, { 0x54, 96 } };
+	final String[] cartTypeTable = { "ROM Only", /* 00 */
+			"ROM+MBC1", /* 01 */
+			"ROM+MBC1+RAM", /* 02 */
+			"ROM+MBC1+RAM+BATTERY", /* 03 */
+			"Unknown", /* 04 */
+			"ROM+MBC2", /* 05 */
+			"ROM+MBC2+BATTERY", /* 06 */
+			"Unknown", /* 07 */
+			"ROM+RAM", /* 08 */
+			"ROM+RAM+BATTERY", /* 09 */
+			"Unknown", /* 0A */
+			"Unsupported ROM+MMM01",/* 0B */
+			"Unsupported ROM+MMM01+SRAM", /* 0C */
+			"Unsupported ROM+MMM01+SRAM+BATTERY", /* 0D */
+			"Unknown", /* 0E */
+			"ROM+MBC3+TIMER+BATTERY", /* 0F */
+			"ROM+MBC3+TIMER+RAM+BATTERY", /* 10 */
+			"ROM+MBC3", /* 11 */
+			"ROM+MBC3+RAM", /* 12 */
+			"ROM+MBC3+RAM+BATTERY", /* 13 */
+			"Unknown", /* 14 */
+			"Unknown", /* 15 */
+			"Unknown", /* 16 */
+			"Unknown", /* 17 */
+			"Unknown", /* 18 */
+			"ROM+MBC5", /* 19 */
+			"ROM+MBC5+RAM", /* 1A */
+			"ROM+MBC5+RAM+BATTERY", /* 1B */
+			"ROM+MBC5+RUMBLE", /* 1C */
+			"ROM+MBC5+RUMBLE+RAM", /* 1D */
+			"ROM+MBC5+RUMBLE+RAM+BATTERY" /* 1E */};
+
+			/** Compressed file types */
+			final byte bNotCompressed = 0;
+			final byte bZip = 1;
+			final byte bJar = 2;
+			final byte bGZip = 3;
+
+			/** RTC Reg names */
+			final byte SECONDS = 0;
+			final byte MINUTES = 1;
+			final byte HOURS = 2;
+			final byte DAYS_LO = 3;
+			final byte DAYS_HI = 4;
+
+
+	
+	
+	public CartridgeOne(String romFileName, Component component) {
+		applet = component; /* 5823 */
+		this.romFileName = romFileName;
+		InputStream inputStrm = null;
+		try {
+			/*
+			 * if (JavaBoy.runningAsApplet) { Applet myApplet = (Applet) a; is =
+			 * new URL(myApplet.getDocumentBase(), romFileName).openStream(); }
+			 * else { is = new FileInputStream(new File(romFileName)); }
+			 */
+			inputStrm = openRom(romFileName, component);
+			byte[] firstBank = new byte[0x04000];
+
+			int total = 0x04000;
+			do {
+				total -= inputStrm.read(firstBank, 0x04000 - total, total); // Read the
+																		// first
+																		// bank
+																		// (bank
+																		// 0)
+			} while (total > 0);
+
+			cartType = firstBank[0x0147];
+
+			numBanks = lookUpCartSize(firstBank[0x0148]); // Determine the
+															// number of 16kb
+															// rom banks
+
+			// is.close();
+			// is = new FileInputStream(new File(romFileName));
+			rom = new byte[0x04000 * numBanks]; // Recreate the ROM array with
+												// the correct size
+
+			// Copy first bank into main rom array
+			for (int r = 0; r < 0x4000; r++) {
+				rom[r] = firstBank[r];
+			}
+
+			total = 0x04000 * (numBanks - 1); // Calculate total ROM size (first
+												// one already loaded)
+			do { // Read ROM into memory
+				total -= inputStrm.read(rom, rom.length - total, total); // Read the
+																	// entire
+																	// ROM
+			} while (total > 0);
+			inputStrm.close();
+
+			JavaBoy.debugLog("Loaded ROM '" + romFileName + "'.  " + numBanks
+					+ " banks, " + (numBanks * 16) + "Kb.  " + getNumRAMBanks()
+					+ " RAM banks.");
+			JavaBoy.debugLog("Type: " + cartTypeTable[cartType] + " ("
+					+ JavaBoy.hexByte(cartType) + ")");
+
+			if (!verifyChecksum() && (component instanceof Frame)) {
+				new ModalDialog((Frame) component, "Warning",
+						"This cartridge has an invalid checksum.",
+						"It may not execute correctly.");
+			}
+
+			if (!JavaBoy.runningAsApplet) {
+				loadBatteryRam();
+			}
+
+			// Set up the real time clock
+			Calendar rightNow = Calendar.getInstance();
+
+			int days = rightNow.get(Calendar.DAY_OF_YEAR);
+			int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+			int minute = rightNow.get(Calendar.MINUTE);
+			int second = rightNow.get(Calendar.SECOND);
+
+			RTCReg[SECONDS] = second;
+			RTCReg[MINUTES] = minute;
+			RTCReg[HOURS] = hour;
+			RTCReg[DAYS_LO] = days & 0x00FF;
+			RTCReg[DAYS_HI] = (days & 0x01FF) >> 8;
+
+			realTimeStart = System.currentTimeMillis();
+			lastSecondIncrement = realTimeStart;
+
+			cartridgeReady = true;
+
+		} catch (IOException e) {
+			System.out
+					.println("Error opening ROM image '" + romFileName + "'!");
+		} catch (IndexOutOfBoundsException e) {
+			new ModalDialog((Frame) component, "Error",
+					"Loading the ROM image failed.",
+					"The file is not a valid Gameboy ROM.");
+		}
+
+	}
+
+
+}
